@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://bnh66jkaci7c6"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_n4qin"]
+[ext_resource type="PackedScene" uid="uid://bhjdhx6qhqw7q" path="res://player.tscn" id="2_h1aux"]
+[ext_resource type="Script" path="res://FramePerSecond.gd" id="3_u8fwp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ckqic"]
+albedo_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_n4qin")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+flip_faces = true
+size = Vector3(1000, 1000, 1000)
+material = SubResource("StandardMaterial3D_ckqic")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 400, 0)
+light_energy = 1000.0
+omni_range = 2000.0
+
+[node name="Player" parent="." instance=ExtResource("2_h1aux")]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Control"]
+
+[node name="Label" type="Label" parent="Control/CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("3_u8fwp")

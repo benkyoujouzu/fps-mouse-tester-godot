@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://bhjdhx6qhqw7q"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_d7gqy"]
+[ext_resource type="Script" path="res://Observer.gd" id="2_755l4"]
+[ext_resource type="Script" path="res://PlayerModel.gd" id="3_14mi1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6vcxf"]
+albedo_color = Color(0.533333, 0.533333, 0.533333, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oy2ua"]
+shading_mode = 0
+albedo_color = Color(0.666667, 0.666667, 0.666667, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n3qp4"]
+size = Vector3(8, 8, 8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4fc00"]
+transparency = 1
+albedo_color = Color(0.866667, 0.866667, 0.866667, 0.784314)
+
+[node name="Player" type="Node3D"]
+script = ExtResource("1_d7gqy")
+
+[node name="Observer" type="Camera3D" parent="."]
+script = ExtResource("2_755l4")
+
+[node name="PlayerModel" type="Node3D" parent="."]
+script = ExtResource("3_14mi1")
+
+[node name="Head" type="CSGBox3D" parent="PlayerModel"]
+size = Vector3(8, 8, 8)
+material = SubResource("StandardMaterial3D_6vcxf")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="PlayerModel"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -3)
+radius = 2.0
+height = 10.0
+material = SubResource("StandardMaterial3D_oy2ua")
+
+[node name="HitScanLine" type="CSGCylinder3D" parent="PlayerModel"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -5000)
+radius = 0.2
+height = 10000.0
+
+[node name="Body" type="CSGBox3D" parent="PlayerModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -20, 0)
+size = Vector3(16, 32, 8)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -490)
+shape = SubResource("BoxShape3D_n3qp4")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -490)
+size = Vector3(8, 8, 8)
+material = SubResource("StandardMaterial3D_4fc00")
