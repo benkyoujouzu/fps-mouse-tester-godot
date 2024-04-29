@@ -79,20 +79,20 @@ func _process(delta):
         get_parent().get_node("StaticBody3D").get_node("CSGBox3D").material.albedo_color = Color(0.8, 0.8, 0.8, 0.8)
     pass
 
-#func rotate_with_input(x, y):
-    #var rot_y = deg_to_rad(-x * m_yaw * sensitivity)
-    #var rot_x = deg_to_rad(-y * m_pitch * sensitivity)
-#
-    #var euler = self.transform.basis.get_euler()
-    #euler.y += rot_y
-    #euler.x += rot_x
-    #euler.x = clampf(euler.x, -deg_to_rad(89), deg_to_rad(89))
-    #self.transform.basis = Basis.from_euler(euler)
-
-# x: 鼠标输入的x
-# y: 鼠标输入的y
 func rotate_with_input(x, y):
     var rot_y = deg_to_rad(-x * m_yaw * sensitivity)
     var rot_x = deg_to_rad(-y * m_pitch * sensitivity)
-    self.rotate(Vector3(0, 1, 0), rot_y)
-    self.rotate(self.transform.basis.x, rot_x)
+
+    var euler = self.transform.basis.get_euler()
+    euler.y += rot_y
+    euler.x += rot_x
+    euler.x = clampf(euler.x, -deg_to_rad(89), deg_to_rad(89))
+    self.transform.basis = Basis.from_euler(euler)
+
+## x: 鼠标输入的x
+## y: 鼠标输入的y
+#func rotate_with_input(x, y):
+    #var rot_y = deg_to_rad(-x * m_yaw * sensitivity)
+    #var rot_x = deg_to_rad(-y * m_pitch * sensitivity)
+    #self.rotate(Vector3(0, 1, 0), rot_y)
+    #self.rotate(self.transform.basis.x, rot_x)
