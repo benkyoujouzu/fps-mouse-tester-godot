@@ -22,10 +22,10 @@ func _ready():
     pass # Replace with function body.
 
 var last_camera = Basis()
+var last_render_camera = Basis()
 var last_position = Vector3()
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-
-
 func _process(delta):
     $Observer.handle_movement(delta)
     if lock_with_camera:
@@ -38,7 +38,11 @@ func _process(delta):
         if ($PlayerModel.transform.basis != last_camera) or ($PlayerModel.transform.origin != last_position):
             last_camera = $PlayerModel.transform.basis
             last_position = $PlayerModel.transform.origin
-        traces[trace_index].get_node("Box").material.albedo_color = Color(0.3, 0.8, 0.3)
+        if $PlayerModel.transform.basis != last_render_camera:
+            traces[trace_index].get_node("Box").material.albedo_color = Color(0.3, 1.0, 0.3)
+            last_render_camera = $PlayerModel.transform.basis
+        else:
+            traces[trace_index].get_node("Box").material.albedo_color = Color(1.0, 0.3, 0.3)
         traces[trace_index].scale = Vector3(rendered_trace_scale, rendered_trace_scale, rendered_trace_scale)
 
 
@@ -79,6 +83,9 @@ func _input(event):
                 if event.keycode == KEY_H:
                     #$Observer.transform.origin = Vector3(0, 0, 0)
                     $Observer.transform = Transform3D()
+                if event.keycode == KEY_B:
+                    $Observer.transform = Transform3D()
+                    $Observer.transform.origin = Vector3(0, 0, -390)
                 if event.keycode == KEY_R:
                     for i in range(trace_length):
                         traces[i].position = Vector3(0, 99999, 0)
@@ -86,6 +93,6 @@ func _input(event):
     if enable_trace and enable_non_rendered_trace and $PlayerModel.transform.basis != last_camera:
         record_trace()
         last_camera = $PlayerModel.transform.basis
-        traces[trace_index].get_node("Box").material.albedo_color = Color(0.8, 0.3, 0.3)
+        traces[trace_index].get_node("Box").material.albedo_color = Color(0.5, 0.5, 1.0)
         traces[trace_index].scale = Vector3(trace_scale, trace_scale, trace_scale)
         #trace_index = (trace_index + 1) % trace_length

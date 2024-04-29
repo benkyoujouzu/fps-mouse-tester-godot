@@ -52,6 +52,10 @@ func handle_movement(delta):
         wishdir -= global_transform.basis.x
     if Input.is_key_pressed(KEY_L):
         wishdir += global_transform.basis.x
+    if Input.is_key_pressed(KEY_SHIFT):
+        self.maxspeed = 130
+    else:
+        self.maxspeed = 250
     wishdir = wishdir.normalized()
     FullWalkMove(wishdir, delta)
 

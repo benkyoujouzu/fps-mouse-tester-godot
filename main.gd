@@ -9,7 +9,7 @@ func _ready():
     Input.use_accumulated_input = false
     #DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
     DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
-    Engine.max_fps = 240
+    Engine.max_fps = 360
     pass # Replace with function body.
 
 

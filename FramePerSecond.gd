@@ -11,7 +11,7 @@ func _process(delta):
     var fps = Engine.get_frames_per_second()
     if delta > max_frame_time:
         max_frame_time = delta
-    self.text = "FPS: " + str(fps) + "\n" + "FrameTime: " + str(max_frame_time * 1000) + "ms"
+    self.text = "FPS: " + str(fps) + "\n" + "MaxFrameTime: " + str(max_frame_time * 1000) + "ms"
     pass
 
 func _input(event):
